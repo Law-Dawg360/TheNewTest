@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Display with Menu Button Navigation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #content {
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 120px; /* Space for the buttons */
+        }
+
+        /* Button styles */
+        .menuButton, .closeButton, .arrowButton {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+
+        /* Menu button styles */
+        #menuButton {
+            bottom: 20px;
+            left: 20px;
+            background-color: #007bff;
+        }
+
+        #menuButton:hover {
+            background-color: #0056b3;
+        }
+
+        #closeButton {
+            bottom: 20px;
+            left: 20px;
+            background-color: #dc3545;
+        }
+
+        #closeButton:hover {
+            background-color: #c82333;
+        }
+
+        /* Arrow button styles */
+        #arrowButton {
+            bottom: 90px; /* Positioned above the menu button */
+            left: 20px;
+            background-color: #17a2b8;
+        }
+
+        #arrowButton:hover {
+            background-color: #138496;
+        }
+
+        /* Menu styles */
+        #menu {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Start off-screen */
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            transition: left 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 500;
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #menu ul li {
+            padding: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        #menu ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        #menu ul li a:hover {
+            background-color: #555;
+        }
+
+        .menu-open #menu {
+            left: 0; /* Slide in */
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <p>Loading content...</p> <!-- Initial message while loading -->
+</div>
+
+<!-- Menu Button, Close Button, and Arrow Button -->
+<button id="menuButton" class="menuButton" onclick="toggleMenu()">☰</button>
+<button id="closeButton" class="closeButton" onclick="toggleMenu()">×</button>
+<button id="arrowButton" class="arrowButton" onclick="switchMenu()">→</button>
+
+<div id="menu">
+    <ul>
+        <li><a href="#">Menu Item 1</a></li>
+        <li><a href="#">Menu Item 2</a></li>
+        <li><a href="#">Menu Item 3</a></li>
+        <li><a href="#">Menu Item 4</a></li>
+    </ul>
+</div>
+
+<script>
+    let menuVisible = false;
+    let menuIndex = 0;
+    const menus = [
+        {
+            button: document.getElementById('menuButton'),
+            close: document.getElementById('closeButton'),
+            arrow: document.getElementById('arrowButton'),
+            menu: document.getElementById('menu')
+        }
+        // Add more menu configurations here if needed
+    ];
+
+    function toggleMenu() {
+        menuVisible = !menuVisible;
+        document.body.classList.toggle('menu-open', menuVisible);
+        updateButtonVisibility();
+    }
+
+    function updateButtonVisibility() {
+        menus.forEach((menu, index) => {
+            menu.button.style.display = (index === menuIndex && !menuVisible) ? 'block' : 'none';
+            menu.close.style.display = (index === menuIndex && menuVisible) ? 'block' : 'none';
+            menu.arrow.style.display = (index === menuIndex) ? 'block' : 'none';
+        });
+    }
+
+    function switchMenu() {
+        if (menuIndex < menus.length - 1) {
+            menuIndex++;
+        } else {
+            menuIndex = 0; // Wrap around to the first menu
+        }
+        updateButtonVisibility();
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowRight') {
+            switchMenu();
+        } else if (event.key === 'ArrowLeft') {
+            if (menuIndex > 0) {
+                menuIndex--;
+            } else {
+                menuIndex = menus.length - 1; // Wrap around to the last menu
+            }
+            updateButtonVisibility();
+        }
+    });
+
+    // Load content from a file
+    function loadContent(filePath) {
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    loadContent('index_1.html'); // Replace 'your-file.html' with the path to your file
+
+    // Initialize button visibility
+    updateButtonVisibility();
+</script>
+
+</body>
+</html>
