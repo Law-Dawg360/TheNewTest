@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Display with Sliding Menu</title>
+    <title>HTML Display with Sliding Menu and Close Button</title>
     <style>
         body {
             margin: 0;
@@ -34,6 +34,7 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: background-color 0.3s;
+            z-index: 1000; /* Ensure the buttons are on top */
         }
 
         #menuButton:hover, #closeButton:hover {
@@ -59,6 +60,7 @@
             transition: left 0.3s;
             padding-top: 60px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 500; /* Ensure the menu is behind the buttons */
         }
 
         #menu ul {
