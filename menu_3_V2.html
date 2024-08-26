@@ -59,7 +59,7 @@
         /* Arrow button styles */
         #arrowButton {
             bottom: 90px; /* Positioned above the menu button */
-            left: 20px;
+            left: 100px; /* Adjusted to be beside the menu button */
             background-color: #17a2b8;
         }
 
@@ -131,6 +131,7 @@
 <script>
     let menuVisible = false;
     let menuIndex = 0;
+
     const menus = [
         {
             button: document.getElementById('menuButton'),
@@ -138,7 +139,6 @@
             arrow: document.getElementById('arrowButton'),
             menu: document.getElementById('menu')
         }
-        // Add more menu configurations here if needed
     ];
 
     function toggleMenu() {
@@ -156,24 +156,23 @@
     }
 
     function switchMenu() {
-        if (menuIndex < menus.length - 1) {
-            menuIndex++;
-        } else {
-            menuIndex = 0; // Wrap around to the first menu
+        // Logic to switch between menus if multiple were available
+        // Currently only supports a single menu
+        if (menus.length > 1) {
+            menuIndex = (menuIndex + 1) % menus.length;
+            updateButtonVisibility();
         }
-        updateButtonVisibility();
     }
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'ArrowRight') {
             switchMenu();
         } else if (event.key === 'ArrowLeft') {
-            if (menuIndex > 0) {
-                menuIndex--;
-            } else {
-                menuIndex = menus.length - 1; // Wrap around to the last menu
+            // Move to the previous menu
+            if (menus.length > 1) {
+                menuIndex = (menuIndex - 1 + menus.length) % menus.length;
+                updateButtonVisibility();
             }
-            updateButtonVisibility();
         }
     });
 
@@ -195,7 +194,7 @@
             });
     }
 
-    loadContent('index_1.html'); // Replace 'your-file.html' with the path to your file
+    loadContent('your-file.html'); // Replace 'your-file.html' with the path to your file
 
     // Initialize button visibility
     updateButtonVisibility();
