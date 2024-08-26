@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Display with Menu Button Navigation</title>
+    <title>HTML Display with Multiple Menu Buttons</title>
     <style>
         body {
             margin: 0;
@@ -36,14 +36,24 @@
         }
 
         /* Menu button styles */
-        #menuButton {
+        #menuButton1 {
             bottom: 20px;
             left: 20px;
             background-color: #007bff;
         }
 
-        #menuButton:hover {
+        #menuButton1:hover {
             background-color: #0056b3;
+        }
+
+        #menuButton2 {
+            bottom: 20px;
+            left: 100px; /* Positioned beside the first button */
+            background-color: #28a745;
+        }
+
+        #menuButton2:hover {
+            background-color: #218838;
         }
 
         #closeButton {
@@ -58,8 +68,8 @@
 
         /* Arrow button styles */
         #arrowButton {
-            bottom: 90px; /* Positioned above the menu button */
-            left: 100px; /* Adjusted to be beside the menu button */
+            bottom: 90px; /* Positioned above the menu buttons */
+            left: 100px; /* Adjusted to be beside the menu buttons */
             background-color: #17a2b8;
         }
 
@@ -68,7 +78,7 @@
         }
 
         /* Menu styles */
-        #menu {
+        .menu {
             position: fixed;
             top: 0;
             left: -250px; /* Start off-screen */
@@ -82,28 +92,32 @@
             z-index: 500;
         }
 
-        #menu ul {
+        .menu ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        #menu ul li {
+        .menu ul li {
             padding: 15px;
             border-bottom: 1px solid #444;
         }
 
-        #menu ul li a {
+        .menu ul li a {
             color: white;
             text-decoration: none;
             display: block;
         }
 
-        #menu ul li a:hover {
+        .menu ul li a:hover {
             background-color: #555;
         }
 
-        .menu-open #menu {
+        .menu-open #menu1 {
+            left: 0; /* Slide in */
+        }
+
+        .menu-open #menu2 {
             left: 0; /* Slide in */
         }
     </style>
@@ -114,40 +128,57 @@
     <p>Loading content...</p> <!-- Initial message while loading -->
 </div>
 
-<!-- Menu Button, Close Button, and Arrow Button -->
-<button id="menuButton" class="menuButton" onclick="toggleMenu()">☰</button>
-<button id="closeButton" class="closeButton" onclick="toggleMenu()">×</button>
+<!-- Menu Buttons, Close Button, and Arrow Button -->
+<button id="menuButton1" class="menuButton" onclick="toggleMenu(1)">☰</button>
+<button id="menuButton2" class="menuButton" onclick="toggleMenu(2)">☰</button>
+<button id="closeButton" class="closeButton" onclick="toggleMenu(currentMenuIndex)">×</button>
 <button id="arrowButton" class="arrowButton" onclick="switchMenu()">→</button>
 
-<div id="menu">
+<div id="menu1" class="menu">
     <ul>
-        <li><a href="#">Menu Item 1</a></li>
-        <li><a href="#">Menu Item 2</a></li>
-        <li><a href="#">Menu Item 3</a></li>
-        <li><a href="#">Menu Item 4</a></li>
+        <li><a href="#">Menu 1 Item 1</a></li>
+        <li><a href="#">Menu 1 Item 2</a></li>
+        <li><a href="#">Menu 1 Item 3</a></li>
+        <li><a href="#">Menu 1 Item 4</a></li>
+    </ul>
+</div>
+
+<div id="menu2" class="menu">
+    <ul>
+        <li><a href="#">Menu 2 Item 1</a></li>
+        <li><a href="#">Menu 2 Item 2</a></li>
+        <li><a href="#">Menu 2 Item 3</a></li>
+        <li><a href="#">Menu 2 Item 4</a></li>
     </ul>
 </div>
 
 <script>
     let menuVisible = false;
-    let menuIndex = 0;
+    let currentMenuIndex = 0; // Track the current menu index
 
     const menus = [
         {
-            button: document.getElementById('menuButton'),
+            button: document.getElementById('menuButton1'),
             close: document.getElementById('closeButton'),
             arrow: document.getElementById('arrowButton'),
-            menu: document.getElementById('menu')
+            menu: document.getElementById('menu1')
+        },
+        {
+            button: document.getElementById('menuButton2'),
+            close: document.getElementById('closeButton'),
+            arrow: document.getElementById('arrowButton'),
+            menu: document.getElementById('menu2')
         }
     ];
 
-    function toggleMenu() {
+    function toggleMenu(menuIndex) {
         menuVisible = !menuVisible;
         document.body.classList.toggle('menu-open', menuVisible);
-        updateButtonVisibility();
+        updateButtonVisibility(menuIndex);
+        currentMenuIndex = menuIndex;
     }
 
-    function updateButtonVisibility() {
+    function updateButtonVisibility(menuIndex) {
         menus.forEach((menu, index) => {
             menu.button.style.display = (index === menuIndex && !menuVisible) ? 'block' : 'none';
             menu.close.style.display = (index === menuIndex && menuVisible) ? 'block' : 'none';
@@ -156,23 +187,16 @@
     }
 
     function switchMenu() {
-        // Logic to switch between menus if multiple were available
-        // Currently only supports a single menu
-        if (menus.length > 1) {
-            menuIndex = (menuIndex + 1) % menus.length;
-            updateButtonVisibility();
-        }
+        currentMenuIndex = (currentMenuIndex + 1) % menus.length;
+        updateButtonVisibility(currentMenuIndex);
     }
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'ArrowRight') {
             switchMenu();
         } else if (event.key === 'ArrowLeft') {
-            // Move to the previous menu
-            if (menus.length > 1) {
-                menuIndex = (menuIndex - 1 + menus.length) % menus.length;
-                updateButtonVisibility();
-            }
+            currentMenuIndex = (currentMenuIndex - 1 + menus.length) % menus.length;
+            updateButtonVisibility(currentMenuIndex);
         }
     });
 
@@ -197,7 +221,7 @@
     loadContent('index_1.html'); // Replace 'your-file.html' with the path to your file
 
     // Initialize button visibility
-    updateButtonVisibility();
+    updateButtonVisibility(currentMenuIndex);
 </script>
 
 </body>
