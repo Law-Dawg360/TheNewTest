@@ -26,6 +26,7 @@
             text-decoration: none;
             color: #333;
             font-weight: bold;
+            cursor: pointer;
         }
         .hero {
             background-image: url('your-image-url.jpg');
@@ -60,7 +61,42 @@
             bottom: 0;
             width: 100%;
         }
+        .menu {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .menu-item {
+            margin: 10px 0;
+        }
+        .menu-item h3 {
+            cursor: pointer;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+        }
+        .submenu {
+            display: none;
+            margin-top: 10px;
+        }
+        .submenu a {
+            display: block;
+            margin: 5px 0;
+            text-decoration: none;
+            color: #333;
+            background-color: #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
+    <script>
+        function toggleSubmenu(category) {
+            const submenu = document.getElementById(category);
+            const isVisible = submenu.style.display === "block";
+            submenu.style.display = isVisible ? "none" : "block";
+        }
+    </script>
 </head>
 <body>
 
@@ -92,6 +128,33 @@
         <div class="section" id="contact">
             <h2>Contact Us</h2>
             <p>Provide contact information or a form where visitors can reach out to you.</p>
+        </div>
+
+        <div class="menu">
+            <div class="menu-item">
+                <h3 onclick="toggleSubmenu('tech')">Technology</h3>
+                <div class="submenu" id="tech">
+                    <a href="https://www.techcrunch.com" target="_blank">TechCrunch</a>
+                    <a href="https://www.wired.com" target="_blank">Wired</a>
+                    <a href="https://www.theverge.com" target="_blank">The Verge</a>
+                </div>
+            </div>
+            <div class="menu-item">
+                <h3 onclick="toggleSubmenu('news')">News</h3>
+                <div class="submenu" id="news">
+                    <a href="https://www.bbc.com/news" target="_blank">BBC News</a>
+                    <a href="https://www.cnn.com" target="_blank">CNN</a>
+                    <a href="https://www.nytimes.com" target="_blank">The New York Times</a>
+                </div>
+            </div>
+            <div class="menu-item">
+                <h3 onclick="toggleSubmenu('sports')">Sports</h3>
+                <div class="submenu" id="sports">
+                    <a href="https://www.espn.com" target="_blank">ESPN</a>
+                    <a href="https://www.skysports.com" target="_blank">Sky Sports</a>
+                    <a href="https://www.bleacherreport.com" target="_blank">Bleacher Report</a>
+                </div>
+            </div>
         </div>
     </div>
 
