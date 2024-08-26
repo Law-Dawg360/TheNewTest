@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Display with Overlay</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #display {
+            position: relative;
+            border: 1px solid #ccc;
+            padding: 20px;
+            min-height: 200px;
+            overflow: auto;
+            background-color: #f9f9f9;
+        }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #display:hover #overlay {
+            opacity: 1;
+        }
+
+        #htmlInput {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <textarea id="htmlInput" rows="5" placeholder="Paste your HTML code here"></textarea>
+    <button onclick="displayHTML()">Display HTML</button>
+    <div id="display">
+        <div id="overlay">Overlay Text</div>
+    </div>
+</div>
+
+<script>
+    function displayHTML() {
+        const htmlContent = document.getElementById('htmlInput').value;
+        document.getElementById('display').innerHTML = htmlContent + document.getElementById('overlay').outerHTML;
+    }
+</script>
+
+</body>
+</html>
