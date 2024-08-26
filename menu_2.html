@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Display with Sliding Menu and Dynamic Content</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #content {
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 50px; /* Space for the button */
+        }
+
+        #menuButton, #closeButton {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+            z-index: 1000; /* Ensure the buttons are on top */
+        }
+
+        #menuButton:hover, #closeButton:hover {
+            background-color: #0056b3;
+        }
+
+        #menuButton {
+            display: block;
+        }
+
+        #closeButton {
+            display: none;
+        }
+
+        #menu {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Start off-screen */
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            transition: left 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 500; /* Ensure the menu is behind the buttons */
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #menu ul li {
+            padding: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        #menu ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        #menu ul li a:hover {
+            background-color: #555;
+        }
+
+        .menu-open #menu {
+            left: 0; /* Slide in */
+        }
+
+        .menu-open #menuButton {
+            display: none;
+        }
+
+        .menu-open #closeButton {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <p>Loading content...</p> <!-- Initial message while loading -->
+</div>
+
+<button id="menuButton" onclick="toggleMenu()">☰</button>
+<button id="closeButton" onclick="toggleMenu()">×</button>
+
+<div id="menu">
+    <ul>
+        <li><a href="#">Menu Item 1</a></li>
+        <li><a href="#">Menu Item 2</a></li>
+        <li><a href="#">Menu Item 3</a></li>
+        <li><a href="#">Menu Item 4</a></li>
+    </ul>
+</div>
+
+<script>
+    function toggleMenu() {
+        document.body.classList.toggle('menu-open');
+    }
+
+    // Function to load content from an external file
+    function loadContent(filePath) {
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    // Load content from a file
+    loadContent('your-file.html'); // Replace 'your-file.html' with the path to your file
+</script>
+
+</body>
+</html>
