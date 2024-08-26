@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Display with Multiple Sliding Menus</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #content {
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 120px; /* Space for the buttons */
+        }
+
+        /* Common button styles */
+        .menuButton, .closeButton {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+
+        /* First menu button styles */
+        #menuButton1, #closeButton1 {
+            bottom: 20px;
+            left: 20px;
+            background-color: #007bff;
+        }
+
+        #menuButton1:hover, #closeButton1:hover {
+            background-color: #0056b3;
+        }
+
+        #menuButton1 {
+            display: block;
+        }
+
+        #closeButton1 {
+            display: none;
+        }
+
+        /* Second menu button styles */
+        #menuButton2, #closeButton2 {
+            bottom: 90px; /* Position above the first button */
+            left: 20px;
+            background-color: #28a745;
+        }
+
+        #menuButton2:hover, #closeButton2:hover {
+            background-color: #218838;
+        }
+
+        #menuButton2 {
+            display: block;
+        }
+
+        #closeButton2 {
+            display: none;
+        }
+
+        /* Common menu styles */
+        .menu {
+            position: fixed;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            transition: left 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 500;
+        }
+
+        #menu1 {
+            left: -250px; /* Start off-screen */
+        }
+
+        #menu2 {
+            left: -250px; /* Start off-screen */
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu ul li {
+            padding: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        .menu ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu ul li a:hover {
+            background-color: #555;
+        }
+
+        /* First menu open state */
+        .menu-open1 #menu1 {
+            left: 0; /* Slide in */
+        }
+
+        .menu-open1 #menuButton1 {
+            display: none;
+        }
+
+        .menu-open1 #closeButton1 {
+            display: block;
+        }
+
+        /* Second menu open state */
+        .menu-open2 #menu2 {
+            left: 0; /* Slide in */
+        }
+
+        .menu-open2 #menuButton2 {
+            display: none;
+        }
+
+        .menu-open2 #closeButton2 {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <p>Loading content...</p> <!-- Initial message while loading -->
+</div>
+
+<!-- First Menu Button and Menu -->
+<button id="menuButton1" class="menuButton" onclick="toggleMenu(1)">☰</button>
+<button id="closeButton1" class="closeButton" onclick="toggleMenu(1)">×</button>
+<div id="menu1" class="menu">
+    <ul>
+        <li><a href="#">Menu 1 Item 1</a></li>
+        <li><a href="#">Menu 1 Item 2</a></li>
+        <li><a href="#">Menu 1 Item 3</a></li>
+        <li><a href="#">Menu 1 Item 4</a></li>
+    </ul>
+</div>
+
+<!-- Second Menu Button and Menu -->
+<button id="menuButton2" class="menuButton" onclick="toggleMenu(2)">☰</button>
+<button id="closeButton2" class="closeButton" onclick="toggleMenu(2)">×</button>
+<div id="menu2" class="menu">
+    <ul>
+        <li><a href="#">Menu 2 Item 1</a></li>
+        <li><a href="#">Menu 2 Item 2</a></li>
+        <li><a href="#">Menu 2 Item 3</a></li>
+        <li><a href="#">Menu 2 Item 4</a></li>
+    </ul>
+</div>
+
+<script>
+    function toggleMenu(menuNumber) {
+        if (menuNumber === 1) {
+            document.body.classList.toggle('menu-open1');
+        } else if (menuNumber === 2) {
+            document.body.classList.toggle('menu-open2');
+        }
+    }
+
+    // Function to load content from an external file
+    function loadContent(filePath) {
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    // Load content from a file
+    loadContent('index_1.html'); // Replace 'your-file.html' with the path to your file
+</script>
+
+</body>
+</html>
