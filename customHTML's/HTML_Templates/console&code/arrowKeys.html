@@ -11,6 +11,9 @@
     document.body.addEventListener("keydown", () => {
       console.log("You pressed down.");
     });
+    document.body.addEventListener("keydown", (ev) => {
+      console.log(ev.key);
+    });
   </script>
 </body>
 </html>
