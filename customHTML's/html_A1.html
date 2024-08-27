@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic HTML Loader</title>
+</head>
+<body>
+
+<div id="content">
+    <p>Loading content...</p> <!-- Initial message while loading -->
+</div>
+
+<!-- Link to the external JavaScript file -->
+<script src="loadContent.js"></script>
+
+<!-- Inline script to call the loadContent function with the desired file path -->
+<script>
+    loadContent('your-file.html'); // Replace 'your-file.html' with the actual path to your file
+</script>
+
+</body>
+</html>
