@@ -8,8 +8,10 @@
 </head>
 <body>
   <script>
-    document.body.addEventListener("keydown", () => {
-      console.log("You pressed down.");
+    document.body.addEventListener("keydown", (ev) => {
+      if(ev.key == "e") {
+        console.log("E-Menu Active")
+      }
     });
   </script>
 </body>
