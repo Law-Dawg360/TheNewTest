@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboard Events in JavaScript</title>
+</head>
+<body>
+  <script>
+    document.body.addEventListener("keydown", () => {
+      console.log("You pressed down.");
+    });
+  </script>
+  <script>
+    document.body.addEventListener("keyup", () => {
+      console.log("You pressed up.");
+    });
+  </script>
+  <script>
+    document.body.addEventListener("keyright", () => {
+      console.log("You pressed right.");
+    });
+  </script>
+  <script>
+    document.body.addEventListener("keyleft", () => {
+      console.log("You pressed left.");
+    });
+  </script>
+</body>
+</html>
