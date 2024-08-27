@@ -10,7 +10,11 @@
   <input id="myInputField" type="text">
 
   <script>
-    const myInputField = document.getElementById("my
+    const myInputField = document.getElementById("myInputField");
+
+    myInputField.addEventListener("input, () => {
+       console.log("hello");                           
+    });
   </script>
   
   <script>
