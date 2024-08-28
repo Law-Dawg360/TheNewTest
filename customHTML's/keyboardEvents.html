@@ -30,6 +30,81 @@
     });
   </script>
 
+
+
+  <script>
+    let menuVisible = false;
+    let currentMenuIndex = 0; // Track the current menu index
+
+    const menus = [
+        {
+            button: document.getElementById('menuButton1'),
+            close: document.getElementById('closeButton'),
+            arrow: document.getElementById('arrowButton'),
+            menu: document.getElementById('menu1')
+        },
+        {
+            button: document.getElementById('menuButton2'),
+            close: document.getElementById('closeButton'),
+            arrow: document.getElementById('arrowButton'),
+            menu: document.getElementById('menu2')
+        }
+    ];
+
+    function toggleMenu(menuIndex) {
+        menuVisible = !menuVisible;
+        document.body.classList.toggle('menu-open', menuVisible);
+        updateButtonVisibility(menuIndex);
+        currentMenuIndex = menuIndex;
+    }
+
+    function updateButtonVisibility(menuIndex) {
+        menus.forEach((menu, index) => {
+            menu.button.style.display = (index === menuIndex && !menuVisible) ? 'block' : 'block'; // Ensure buttons reappear
+            menu.close.style.display = (index === menuIndex && menuVisible) ? 'block' : 'none';
+            menu.arrow.style.display = (index === menuIndex) ? 'block' : 'none'; // Display arrow button only for the current menu
+        });
+    }
+
+    function switchMenu() {
+        currentMenuIndex = (currentMenuIndex + 1) % menus.length;
+        updateButtonVisibility(currentMenuIndex);
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowRight') {
+            switchMenu();
+        } else if (event.key === 'ArrowLeft') {
+            currentMenuIndex = (currentMenuIndex - 1 + menus.length) % menus.length;
+            updateButtonVisibility(currentMenuIndex);
+        }
+    });
+
+    // Load content from a file
+    function loadContent(filePath) {
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    loadContent('index_1.html'); // Replace 'your-file.html' with the path to your file
+
+    // Initialize button visibility
+    updateButtonVisibility(currentMenuIndex);
+</script>
+  
+
   
 </body>
 </html>
