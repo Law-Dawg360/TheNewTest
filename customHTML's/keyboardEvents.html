@@ -14,12 +14,6 @@
       if(ev.key == "e") {
         console.log("E-Menu Active")
       }
-      else if(ev.key == "ArrowUp") {
-        console.log("Up")
-      }
-      else if(ev.key == "ArrowDown") {
-        console.log("Down")
-      }
       else if(ev.key == "ArrowLeft") {
         console.log("Pressed Left Key")
       }
@@ -28,5 +22,14 @@
       }
     });
   </script>
+  <script>
+    document.body.addEventListener("keyup", (ev) => {
+      if(ev.key == "e") {
+        console.log("E-Menu DeActive")
+      }
+    });
+  </script>
+
+  
 </body>
 </html>
