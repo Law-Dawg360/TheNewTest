@@ -10,6 +10,15 @@
   <input id="myInputField" type="text">
 
   <script>
+    const myInputField = document.getElementById("myInputField");
+
+    myInputField.addEventListener("input", (ev) => {
+       console.log("hello" + "\n" + ev + "\nw");
+    });
+  </script>
+
+  
+  <script>
     document.body.addEventListener("keydown", (ev) => {
       if(ev.key == "e") {
         console.log("E-Menu Active")
